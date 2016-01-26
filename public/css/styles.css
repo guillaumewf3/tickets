@@ -1,0 +1,19 @@
+.help, #requests {
+	display: none;
+}
+
+body.connected .help {
+	display: inline-block;
+}
+
+body.connected #requests {
+	display: table;
+}
+
+body.connected #loginForm {
+	display: none;
+}
+
+.help-btn-container {
+	margin: 30px 0;
+}

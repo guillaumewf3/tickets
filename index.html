@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tickets !</title>
+
+	<link href="https://bootswatch.com/flatly/bootstrap.min.css" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+	
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Tickets !</h1>
+		</header>
+
+		<div class="row">
+
+			<div class="col col-xs-12">
+				<form id="loginForm">
+					<h3>Connexion</h3>
+					<div class="form-group">
+						<label for="name">Votre prénom</label>
+						<input type="text" name="name" class="form-control" id="name" placeholder="Votre prénom" />
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">Go</button>
+					</div>
+				</form>
+
+				<div class="help-btn-container">
+					<button class="btn btn-danger help" data-level="urgent">Helppppppp !</button>
+					<button class="btn btn-warning help" data-level="asap">Question !</button>
+					<button class="btn btn-success help" data-level="lazy">Quand tu pourras...</button>
+				</div>
+
+				<table id="requests" class="table">
+					<thead>
+					<tr>
+						<th>Étudiant</th>
+						<th>Date</th>
+						<th>Niveau</th>
+						<th></th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+
+				<div class="help-btn-container">
+					<button class="btn btn-danger help" data-level="urgent">Helppppppp !</button>
+					<button class="btn btn-warning help" data-level="asap">Question !</button>
+					<button class="btn btn-success help" data-level="lazy">Quand tu pourras...</button>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<a href="#" class="pull-right" id="logout-btn">Déconnexion</a>
+		</footer>
+	</div>
+
+	<audio id="beep" src="sound/beep.mp3"></audio>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="js/tickets.js"></script>
+</body>
+</html>
