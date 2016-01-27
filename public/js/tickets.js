@@ -1,20 +1,29 @@
+//connexion au serveur de websocket avec socket.io
 var socket = io({  
 	'reconnect': true,
   	'reconnection delay': 1000,
   	'max reconnection attempts': 100
 });
 
+//données de l'utilisateur connecté
 var user;
 
+//met à jour le tableau des questions
 function updateRequests(data){
+	
 	console.log(data);
 	var trClass;
 	$('#requests tbody').empty();
+	
+	//les questions sont classés par niveau d'urgence côté serveur
 	for(l in data){
+	
 		if (data[l].length > 0){
+	
 			for(var i=0;i<data[l].length;i++){
-				var req = data[l][i];
+				var req = data[l][i]; //req = une question
 
+				//pour les couleurs des tr
 				switch(req.level){
 					case "urgent":
 						trClass = "danger"; break;
@@ -24,13 +33,14 @@ function updateRequests(data){
 						trClass = "success"; break;
 				}
 
+				//construit l'élément
 				var reqEl = $("<tr>").attr("id", req.id).addClass(trClass);
 				var name = $("<td>").html(req.username);
 				var date = $("<td>").html(req.date);
 				var level = $("<td>").html(req.level);
 				var actionTd = $("<td>");
 
-				//only add button to request author, or to me
+				//ajoute les boutons pour l'auteur de la question, ou pour guillaume
 				if (req.username == user.username || user.username == "guillaume"){
 					var removeButton = $('<button>').html("C'est bon !").attr({
 						"data-id": req.id
@@ -38,14 +48,15 @@ function updateRequests(data){
 					actionTd.append(removeButton);
 				}
 
+				//ajoute au dom
 				reqEl.append(name).append(date).append(level).append(actionTd);
-
 				$('#requests tbody').append(reqEl);
 			}
 		}
 	}
 }
 
+//appelée sur click d'un bouton de question
 function onHelpButton(e){
 	socket.emit('help', {
 		"user": user,
@@ -53,19 +64,22 @@ function onHelpButton(e){
 	});
 }
 
+//appelée sur soumission du formulaire de connexion
 function onLoginFormSubmission(e){
 	e.preventDefault();
 	var username = $('#name').val();
 	socket.emit('login', username);
 }
 
+//appelée sur message du serveur de type "userToken"
 function completeLogin(data){
 	user = data;
 	localStorage.setItem('username', user.username);
 	$("body").addClass("connected");
-	socket.emit('getRequests');
+	socket.emit('getRequests'); //demande au serveur de récupérer les questions en cours
 }
 
+//appelée sur clic du lien de déconnexion
 function onLogout(){
 	//$("body").removeClass("connected");
 	localStorage.removeItem('user');
@@ -73,23 +87,28 @@ function onLogout(){
 	document.location.reload(true);
 }
 
+//appelée à l'initialisation
+//tente de retrouver le username dans le localStorage pour éviter le formulaire de connexion
 function retrieveUserFromLocalStorage(){
 	var usernameFromLS = localStorage.getItem('username');
 
 	if (usernameFromLS){
 		var username = usernameFromLS;
-		socket.emit('login', username);
+		socket.emit('login', username); //simule une connexion
 	}
 }
 
+//demande au serveur de retirer une question
 function removeRequest(){
 	reqId = $(this).attr("data-id");
 	socket.emit('removeRequest', {
 		"reqId": reqId,
-		"user": user
+		"user": user //pour vérifier la permission
 	});
 }
 
+//appelée lorsqu'une nouvelle requête vient d'être ajoutée côté serveur
+//seulement le prof devrait recevoir ce message "newRequest"
 function newRequest(){
 	console.log("newRequest");
 	$("#beep")[0].play();
@@ -99,13 +118,16 @@ function init(){
 	retrieveUserFromLocalStorage();
 }
 
+//écoute les messages du serveur...
 socket.on('help', updateRequests);
 socket.on('userToken', completeLogin);
 socket.on('newRequest', newRequest);
 
+//écoute les événements locaux
 $('#loginForm').on("submit", onLoginFormSubmission);
 $(".help").on("click", onHelpButton);
 $("#logout-btn").on("click", onLogout);
 $("#requests").on("click", ".remove-button", removeRequest);
 
+//go
 init();
