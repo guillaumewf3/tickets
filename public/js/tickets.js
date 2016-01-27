@@ -61,27 +61,24 @@ function onLoginFormSubmission(e){
 
 function completeLogin(data){
 	user = data;
-	localStorage.setItem('user', JSON.stringify(user));
-	onConnect();
-}
-
-function onConnect(){
+	localStorage.setItem('username', user.username);
 	$("body").addClass("connected");
 	socket.emit('getRequests');
 }
 
 function onLogout(){
-	$("body").removeClass("connected");
+	//$("body").removeClass("connected");
 	localStorage.removeItem('user');
+	localStorage.removeItem('username');
 	document.location.reload(true);
 }
 
 function retrieveUserFromLocalStorage(){
-	userFromLS = JSON.parse(localStorage.getItem('user'));
+	var usernameFromLS = localStorage.getItem('username');
 
-	if (userFromLS){
-		user = userFromLS;
-		onConnect();
+	if (usernameFromLS){
+		var username = usernameFromLS;
+		socket.emit('login', username);
 	}
 }
 
@@ -94,6 +91,7 @@ function removeRequest(){
 }
 
 function newRequest(){
+	console.log("newRequest");
 	$("#beep")[0].play();
 }
 
