@@ -109,9 +109,8 @@ function removeRequest(){
 
 //appelée lorsqu'une nouvelle requête vient d'être ajoutée côté serveur
 //seulement le prof devrait recevoir ce message "newRequest"
-function newRequest(){
-	console.log("newRequest");
-	$("#beep")[0].play();
+function newRequest(req){
+	$("#"+req.level+"-sound")[0].play();
 }
 
 function init(){
