@@ -11,7 +11,11 @@ var user;
 //met à jour le tableau des questions
 function updateRequests(data){
 	
-	console.log(data);
+	//si l'utilisateur n'est pas encore connecté, ne pas exécuter la suite
+	if (!user){
+		return false;
+	}
+
 	var trClass;
 	$('#requests tbody').empty();
 	
@@ -38,7 +42,7 @@ function updateRequests(data){
 				var name = $("<td>").html(req.username);
 				var date = $("<td>").html(req.date);
 				var level = $("<td>").html(req.level);
-				var actionTd = $("<td>");
+				var actionTd = $("<td>");		
 
 				//ajoute les boutons pour l'auteur de la question, ou pour guillaume
 				if (req.username == user.username || user.username == "guillaume"){
