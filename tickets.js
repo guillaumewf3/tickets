@@ -5,14 +5,16 @@ var io = require('socket.io')(http);
 var uniqid = require('uniqid');
 var dateFormat = require('dateformat');
 
+var publicRoot = __dirname + '/public';
+
 var teacherSocket;
 
 //send base file to client
 app.get('/', function(req, res){
-	res.sendFile('index.html', { root: __dirname });
+	res.sendFile('index.html', { root: publicRoot });
 });
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(publicRoot));
 
 //private requests
 var privateReqs = [];

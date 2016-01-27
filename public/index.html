@@ -58,7 +58,9 @@
 		</footer>
 	</div>
 
-	<audio id="beep" src="sound/beep.mp3"></audio>
+	<audio id="beep" preload="auto">
+	    <source src="sound/beep.mp3" type="audio/mpeg" />
+	</audio>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
