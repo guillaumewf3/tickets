@@ -26,11 +26,15 @@ var reqs = {
 
 //connection
 io.on('connection', function(socket){
-	//send current requests on connect
-	io.emit('help', reqs);
+
+	socket.on('getRequests', function(){
+		console.log('getRequests');
+		io.emit('help', reqs);
+	});
 
 	//login event
 	socket.on('login', function(username){
+		console.log('login');
 		var user = {
 			'id': (username == "guillaume") ? "boumboum" : uniqid(),
 			'username': username
@@ -45,6 +49,7 @@ io.on('connection', function(socket){
 
 	//help event
 	socket.on('help', function(data){
+		console.log('help');
 		var req = {
 			"id": uniqid(),
 			"username": data.user.username,
@@ -68,6 +73,7 @@ io.on('connection', function(socket){
 
 	//remove request event
 	socket.on('removeRequest', function(data){
+		console.log('removeRequest');
 		var reqId = data.reqId;
 		var user = data.user;
 
@@ -95,7 +101,7 @@ io.on('connection', function(socket){
 
 	//disconnection
 	socket.on('disconnect', function(){
-		console.log('user disconnected');
+		console.log('disconnect');
 	});
 });
 

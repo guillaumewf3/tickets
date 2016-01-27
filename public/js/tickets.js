@@ -1,7 +1,13 @@
-var socket = io();
+var socket = io({  
+	'reconnect': true,
+  	'reconnection delay': 1000,
+  	'max reconnection attempts': 100
+});
+
 var user;
 
 function updateRequests(data){
+	console.log(data);
 	var trClass;
 	$('#requests tbody').empty();
 	for(l in data){
@@ -61,6 +67,7 @@ function completeLogin(data){
 
 function onConnect(){
 	$("body").addClass("connected");
+	socket.emit('getRequests');
 }
 
 function onLogout(){
