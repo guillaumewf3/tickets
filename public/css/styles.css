@@ -17,3 +17,7 @@ body.connected #loginForm {
 .help-btn-container {
 	margin: 30px 0;
 }
+
+#oops {
+	display: none;
+}

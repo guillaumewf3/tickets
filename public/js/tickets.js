@@ -117,6 +117,10 @@ function newRequest(req){
 	$("#"+req.level+"-sound")[0].play();
 }
 
+function teacherIsClosed(){
+	$("#oops").show();
+}
+
 function init(){
 	retrieveUserFromLocalStorage();
 }
@@ -125,12 +129,16 @@ function init(){
 socket.on('help', updateRequests);
 socket.on('userToken', completeLogin);
 socket.on('newRequest', newRequest);
+socket.on('teacherIsClosed', teacherIsClosed);
 
 //écoute les événements locaux
 $('#loginForm').on("submit", onLoginFormSubmission);
 $(".help").on("click", onHelpButton);
 $("#logout-btn").on("click", onLogout);
 $("#requests").on("click", ".remove-button", removeRequest);
+$("#oops .close").on("click", function(){
+	$("#oops").hide();
+});
 
 //go
 init();

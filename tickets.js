@@ -28,6 +28,7 @@ var reqs = {
 	"lazy": []
 };
 
+
 //connection
 io.on('connection', function(socket){
 
@@ -58,12 +59,24 @@ io.on('connection', function(socket){
 	socket.on('help', function(data){
 		console.log('help');
 
+		var now = new Date();
+
+		//vérifie les heures d'ouverture
+		h = now.getHours();
+		m = now.getMinutes();
+
+		if ((h <= 9 && m < 30) || (h >= 13 && h < 14) || (h >= 17 && m > 30)){
+			//envoie un message seulement à l'utilisateur
+			io.to(socket.id).emit('teacherIsClosed');
+			return false;
+		}
+
 		//crée l'objet
 		var req = {
 			"id": uniqid(),
 			"username": data.user.username,
 			"level": data.level,
-			"date": dateFormat(new Date(), "dd/mm à HH:MM:ss")
+			"date": dateFormat(now, "dd/mm à HH:MM:ss")
 		};
 
 		//ajout dans le tableau général
