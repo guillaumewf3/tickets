@@ -125,6 +125,8 @@ function init(){
 	retrieveUserFromLocalStorage();
 }
 
+new Konami(function(){window.setInterval(function(){$("audio")[Math.floor(Math.random()*3)].play();console.log("kon!");},1000)});
+
 //écoute les messages du serveur...
 socket.on('help', updateRequests);
 socket.on('userToken', completeLogin);
@@ -139,6 +141,7 @@ $("#requests").on("click", ".remove-button", removeRequest);
 $("#oops .close").on("click", function(){
 	$("#oops").hide();
 });
+
 
 //go
 init();
