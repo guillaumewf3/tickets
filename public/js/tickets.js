@@ -86,6 +86,9 @@ function completeLogin(data){
 //appelée sur clic du lien de déconnexion
 function onLogout(){
 	//$("body").removeClass("connected");
+	socket.emit('logout', {
+		"user": user,
+	});
 	localStorage.removeItem('user');
 	localStorage.removeItem('username');
 	document.location.reload(true);

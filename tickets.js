@@ -38,16 +38,35 @@ io.on('connection', function(socket){
 		io.emit('help', reqs); //envoie un message "help" au client, avec toutes les questions en cours
 	});
 
+	//écoute le message "logout"
+	/*
+	socket.on('logout', function(data){
+		var user = data.user;
+		console.log(user);
+		//cherche le user dans le tableau simple des requêtes
+		var i = privateReqs.length;
+		var reqsToRemove = [];
+		while(i--){
+			if (privateReqs[i].authorId == user.id){
+				reqsToRemove.push(privateReqs[i].id);
+				privateReqs.splice(i, 1);
+			}
+		}
+
+		io.emit('help', reqs);
+		});
+	*/
+
 	//écoute le message "login"
 	socket.on('login', function(username){
 		console.log('login');
 		var user = {
-			'id': (username == "guillaume") ? "boumboum" : uniqid(), //token
+			'id': (username == "guill") ? "boumboum" : uniqid(), //token
 			'username': username
 		};
 
 		//prof ici
-		if (username == "guillaume"){
+		if (username == "guill"){
 			teacherSocket = socket;
 		}
 
@@ -65,7 +84,7 @@ io.on('connection', function(socket){
 		h = now.getHours();
 		m = now.getMinutes();
 
-		if ((h <= 9 && m < 30) || (h >= 13 && h < 14) || (h >= 17 && m > 30)){
+		if ((h <= 9) || ((h >= 12 && m > 30) && (h < 14)) || (h >= 17 && m > 30)){
 			//envoie un message seulement à l'utilisateur
 			io.to(socket.id).emit('teacherIsClosed');
 			return false;
