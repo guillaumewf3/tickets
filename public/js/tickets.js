@@ -120,7 +120,9 @@ function newRequest(req){
 	$("#"+req.level+"-sound")[0].play();
 }
 
-function teacherIsClosed(){
+function showError(message){
+	console.log(message);
+	$("#oops p").html(message);
 	$("#oops").show();
 }
 
@@ -134,7 +136,7 @@ new Konami(function(){window.setInterval(function(){$("audio")[Math.floor(Math.r
 socket.on('help', updateRequests);
 socket.on('userToken', completeLogin);
 socket.on('newRequest', newRequest);
-socket.on('teacherIsClosed', teacherIsClosed);
+socket.on('showError', showError);
 
 //écoute les événements locaux
 $('#loginForm').on("submit", onLoginFormSubmission);
