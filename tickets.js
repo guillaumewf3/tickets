@@ -85,7 +85,7 @@ io.on('connection', function(socket){
 		for(var i=0; i<privateReqs.length; i++){
 			if (privateReqs[i]['authorId'] == data.user.id){
 				console.log('double post');
-				io.emit('showError', "Vous avez déjà posé une question !");
+				io.to(socket.id).emit('showError', "Vous avez déjà posé une question !");
 				return false;
 			}
 		}
