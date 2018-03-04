@@ -44,8 +44,9 @@ function updateRequests(data){
 				var level = $("<td>").html(req.level);
 				var actionTd = $("<td>");		
 
-				//ajoute les boutons pour l'auteur de la question, ou pour guillaume
-				if (req.username == user.username || user.username == "guillaume"){
+				//ajoute les boutons pour l'auteur de la question, ou pour prof
+				//oui, c'est facile à hacker, bravo.
+				if (req.username == user.username || user.username == "prof"){
 					var removeButton = $('<button>').html("C'est bon !").attr({
 						"data-id": req.id
 					}).addClass("btn btn-xs btn-primary remove-button");
@@ -129,8 +130,6 @@ function showError(message){
 function init(){
 	retrieveUserFromLocalStorage();
 }
-
-new Konami(function(){window.setInterval(function(){$("audio")[Math.floor(Math.random()*3)].play();console.log("kon!");},1000)});
 
 //écoute les messages du serveur...
 socket.on('help', updateRequests);

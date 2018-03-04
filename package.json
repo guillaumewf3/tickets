@@ -6,7 +6,7 @@
     "dateformat": "^1.0.12",
     "express": "^4.13.4",
     "socket.io": "^1.4.4",
-    "striptags": "^3.1.0",
+    "striptags": "^3.1.1",
     "uniqid": "^1.0.0"
   }
 }

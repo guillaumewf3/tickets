@@ -64,12 +64,12 @@ io.on('connection', function(socket){
 		var username = striptags(username);
 		console.log('login');
 		var user = {
-			'id': (username == "guillaume") ? "boumboum" : uniqid(), //token
+			'id': (username == "prof") ? "prof" : uniqid(), //token
 			'username': username
 		};
 
 		//prof ici
-		if (username == "guillaume"){
+		if (username == "prof"){
 			teacherSocket = socket;
 		}
 
@@ -135,7 +135,7 @@ io.on('connection', function(socket){
 		for(var i=0; i<privateReqs.length; i++){
 			if (privateReqs[i]['reqId'] == reqId){
 				//teste si c'est bien l'auteur qui tente de la retirer... ou le prof
-				if (privateReqs[i]['authorId'] == user.id || user.id == "boumboum"){
+				if (privateReqs[i]['authorId'] == user.id || user.id == "prof"){
 					//ok pour l'enlever
 					//retire du tableau simple
 					privateReqs.splice(i, 1);
@@ -172,6 +172,6 @@ function removeRequestFromList(reqId){
 }
 
 //go
-http.listen(3000, function(){
-	console.log('listening on *:3000');
+http.listen(3002, function(){
+	console.log('listening on *:3002');
 });
